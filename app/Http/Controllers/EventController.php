@@ -44,6 +44,7 @@ class EventController extends Controller
         $fields['description'] = $request->input('description');
         $fields['start'] = $request->input('start');
         $fields['finish'] = $request->input('finish');
+        $fields['rate'] = 5;
 
         $newEvent = Event::create($fields);
 
@@ -126,4 +127,15 @@ class EventController extends Controller
         }
         return response(['message' => 'Event not found'], 404);
     }
+
+    public function getUsersToEvent(Request $request, $eventId) {
+        $event = Event::find($eventId);
+
+        if ($event) {
+            return response($event->usersEvents()->get(), 200);
+        }
+
+        $request->user()->takingPart()->detach($eventId);
+        return response(['message' => 'detached'], 200);
+    } 
 }

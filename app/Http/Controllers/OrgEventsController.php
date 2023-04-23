@@ -86,8 +86,19 @@ class OrgEventsController extends Controller
     public function getOrganizerEvents(Request $request) {
         $events = Event::with('category')->where('user_id', $request->user()->id)->get();
 
+        $eventsWithUsers = [];
+
         if ($events) {
-            return response($events, 200);
+            foreach ($events as $key => $value) {
+                $event = Event::with('category')->find($value->id);
+                $eventUsers = $event->usersEvents()->get();
+                $obj = [
+                    'event' => $event,
+                    'eventUsers' => $eventUsers,
+                ];
+                $eventsWithUsers[] = $obj;
+            }
+            return response($eventsWithUsers, 200);
         }
 
         return response(['message' => 'Events not found'], 404);

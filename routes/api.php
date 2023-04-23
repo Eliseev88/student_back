@@ -29,6 +29,7 @@ Route::prefix('/user')->group(function () {
 
 // Events
 Route::get('/events', [EventController::class, 'index']);
+// Route::get('/event_users/{eventId}', [EventController::class, 'getUsersToEvent']);
 Route::prefix('/event')->group(function () {
     Route::get('/{id}', [EventController::class, 'show']);
 });

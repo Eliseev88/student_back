@@ -99,9 +99,9 @@ class UserController extends Controller
 
         if ($existingUser) {
             $fields['role'] = $request->input('role');
-            $fields['name'] = $request->input('name');
-            $fields['email'] = $request->input('email');
-            $fields['password'] = Hash::make($request->input('password'));
+            // $fields['name'] = $request->input('name');
+            // $fields['email'] = $request->input('email');
+            // $fields['password'] = Hash::make($request->input('password'));
 
             $existingUser->fill($fields)->save();
 
